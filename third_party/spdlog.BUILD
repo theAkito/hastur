@@ -13,6 +13,7 @@ cc_library(
     ],
     linkopts = select({
         "@platforms//os:linux": ["-lpthread"],
+        "@platforms//os:macos": ["-lpthread"],
         "@platforms//os:windows": [],
     }),
     strip_include_prefix = "include",
@@ -25,6 +26,7 @@ cc_library(
     hdrs = glob(["include/**/*.h"]),
     linkopts = select({
         "@platforms//os:linux": ["-lpthread"],
+        "@platforms//os:macos": ["-lpthread"],
         "@platforms//os:windows": [],
     }),
     strip_include_prefix = "include",

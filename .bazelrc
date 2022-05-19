@@ -91,6 +91,8 @@ build:gcc12 --config=gcc11
 build:gcc12 --per_file_copt='external/freetype2[:/]@-Wno-dangling-pointer'
 build:gcc12 --per_file_copt='external/glew[:/]@-Wno-address'
 
+build:macos --copt='-std=c++20'
+
 build:windows --enable_runfiles
 build:windows --cxxopt='/std:c++20'
 build:windows --copt='/W4' # More warnings.
