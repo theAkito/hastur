@@ -51,6 +51,7 @@ int run_all_tests() noexcept {
 
         int const before = assertion_failures;
 
+#ifdef __EXCEPTIONS
         try {
             test.body();
         } catch (test_failure const &) {
@@ -62,6 +63,9 @@ int run_all_tests() noexcept {
             ++assertion_failures;
             test_log << "Unhandled unknown exception in test body.\n";
         }
+#else
+        test.body();
+#endif
 
         if (before == assertion_failures) {
             std::cout << "\u001b[32mPASSED\u001b[0m\n";
@@ -101,7 +105,11 @@ void require(bool b, etest::source_location const &loc) {
             test_log << "  requirement failure at " << loc.file_name() << "(" << loc.line() << ":" << loc.column()
                      << ")\n";
         }
+#ifdef __EXCEPTIONS
         throw test_failure{};
+#else
+        std::terminate();
+#endif
     }
 }
 

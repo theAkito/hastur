@@ -8,6 +8,7 @@ cc_library(
         "include/**/*.ipp",
     ]),
     defines = [
+        "ASIO_NO_EXCEPTIONS",
         "ASIO_NO_TYPEID",
         "ASIO_SEPARATE_COMPILATION",
     ],

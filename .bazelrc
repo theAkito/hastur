@@ -21,6 +21,7 @@ build:linux --features=layering_check
 
 build:linux --cxxopt='-std=c++20'
 build:linux --cxxopt='-fno-rtti'
+build:linux --cxxopt='-fno-exceptions'
 build:linux --copt='-Wall'
 build:linux --copt='-Wextra'
 build:linux --copt='-pedantic-errors'

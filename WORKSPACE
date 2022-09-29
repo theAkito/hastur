@@ -45,6 +45,17 @@ hedron_compile_commands_setup()
 http_archive(
     name = "asio",  # BSL-1.0
     build_file = "//third_party:asio.BUILD",
+    patch_cmds = [
+        "echo '#pragma once' >>include/asio/detail/throw_exception.hpp",
+        "echo '#include <iostream>' >>include/asio/detail/throw_exception.hpp",
+        "echo 'namespace asio::detail {' >>include/asio/detail/throw_exception.hpp",
+        "echo 'template<typename Exception>' >>include/asio/detail/throw_exception.hpp",
+        "echo 'void throw_exception(Exception const &e) {' >>include/asio/detail/throw_exception.hpp",
+            "echo 'std::cerr << \"Exploding due to unhandled exception from asio: \" << e.what() << std::endl;' >>include/asio/detail/throw_exception.hpp",
+            "echo 'std::terminate();' >>include/asio/detail/throw_exception.hpp",
+        "echo '}' >>include/asio/detail/throw_exception.hpp",
+        "echo '} // namespace asio::detail' >>include/asio/detail/throw_exception.hpp",
+    ],
     sha256 = "6874d81a863d800ee53456b1cafcdd1abf38bbbf54ecf295056b053c0d7115ce",
     strip_prefix = "asio-1.22.1",
     url = "https://downloads.sourceforge.net/project/asio/asio/1.22.1%20(Stable)/asio-1.22.1.tar.bz2",

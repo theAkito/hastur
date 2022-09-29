@@ -49,6 +49,7 @@ void expect_eq(T const &a, U const &b, etest::source_location const &loc = etest
 // Hard test requirement. Prints the types compared on failure (if printable).
 template<Printable T, Printable U>
 void require_eq(T const &a, U const &b, etest::source_location const &loc = etest::source_location::current()) {
+#ifdef __EXCEPTIONS
     if (a != b) {
         try {
             require(false, loc);
@@ -57,6 +58,9 @@ void require_eq(T const &a, U const &b, etest::source_location const &loc = etes
             throw;
         }
     }
+#else
+    require(a == b, loc);
+#endif
 }
 
 template<typename T, typename U>
