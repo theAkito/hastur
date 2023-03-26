@@ -4,6 +4,16 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 # =========================================================
 
 http_archive(
+    name = "bazel_skylib",
+    sha256 = "b8a1527901774180afc798aeb28c4634bdccf19c4d98e7bdd1ce79d1fe9aaad7",
+    url = "https://github.com/bazelbuild/bazel-skylib/releases/download/1.4.1/bazel-skylib-1.4.1.tar.gz",
+)
+
+# load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
+
+# bazel_skylib_workspace()
+
+http_archive(
     name = "platforms",  # Apache-2.0
     sha256 = "5308fc1d8865406a49427ba24a9ab53087f17f5266a7aabbfc28823f3916e1ca",
     url = "https://github.com/bazelbuild/platforms/releases/download/0.0.6/platforms-0.0.6.tar.gz",
@@ -14,6 +24,18 @@ http_archive(
     sha256 = "d9002dd3cd6437017f08593124fdd1b13b3473c7b929ceb0e60d317cb9346118",
     strip_prefix = "rules_fuzzing-0.3.2",
     url = "https://github.com/bazelbuild/rules_fuzzing/archive/v0.3.2.zip",
+)
+
+# Third-party Bazel
+# =========================================================
+
+BAZEL_ZIG_CC_VERSION = "v1.0.1"
+
+http_archive(
+    name = "bazel-zig-cc",
+    sha256 = "e9f82bfb74b3df5ca0e67f4d4989e7f1f7ce3386c295fd7fda881ab91f83e509",
+    strip_prefix = "bazel-zig-cc-{}".format(BAZEL_ZIG_CC_VERSION),
+    url = "https://github.com/uber/bazel-zig-cc/releases/download/{0}/{0}.tar.gz".format(BAZEL_ZIG_CC_VERSION),
 )
 
 # Misc tools
@@ -224,6 +246,10 @@ http_archive(
 
 # This needs to go last so that we can override any dependencies these calls may
 # pull in.
+
+load("@bazel-zig-cc//toolchain:defs.bzl", zig_toolchains = "toolchains")
+
+zig_toolchains()
 
 load("@rules_fuzzing//fuzzing:repositories.bzl", "rules_fuzzing_dependencies")
 
